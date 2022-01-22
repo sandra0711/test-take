@@ -8,14 +8,14 @@ class UserController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return next(MyError.BadRequest('Ошибка при валидации', errors.array()));
-      }
+        throw MyError.BadRequest('Ошибка при валидации. Введите корректные данные');
+      };
       const { email, password } = req.body;
       const userData = await userService.registration(email, password);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 24 * 60 * 60 * 10000, httpOnly: true });
       return res.json(userData);
     } catch (e) {
-      next(e);
+      next(e.message);
     }
   };
 
@@ -26,7 +26,7 @@ class UserController {
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 24 * 60 * 60 * 10000, httpOnly: true });
       return res.json(userData);
     } catch (e) {
-      next(e);
+      next(e.message);
     }
   };
 
@@ -37,7 +37,7 @@ class UserController {
       res.clearCookie('refreshToken');
       return res.json(token);
     } catch (e) {
-      next(e);
+      next(e.message);
     }
   };
 
@@ -47,7 +47,7 @@ class UserController {
       userService.activate(link);
       res.redirect(process.env.CLIENT_URL);
     } catch (e) {
-      next(e);
+      next(e.message);
     }
   };
 
@@ -58,7 +58,7 @@ class UserController {
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 10000000, httpOnly: true });
       return res.json(userData);
     } catch (e) {
-      next(e);
+      next(e.message);
     }
   };
 };

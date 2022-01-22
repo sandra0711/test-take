@@ -10,6 +10,7 @@ const initialState: UserState = {
   },
   isAuth: false,
   isLoading: false,
+  error: '',
 };
 
 const API_URL = 'http://localhost:5000';
@@ -22,7 +23,7 @@ export const fetchRegister = createAsyncThunk(
       localStorage.setItem('token', response.data.accessToken);
       return response.data.user;
     } catch (e: any) {
-      throw new Error('это ошибка из функции регистрации');
+      throw new Error(e.response.data);
     }
   });
 
@@ -34,7 +35,7 @@ export const fetchLogin = createAsyncThunk(
       localStorage.setItem('token', response.data.accessToken);
       return response.data.user;
     } catch (e: any) {
-      throw new Error('это ошибка из функции логин');
+      throw new Error(e.response.data);
     }
   });
 
@@ -76,24 +77,28 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
       state.isAuth = true;
+      state.error = '';
       state.user = action.payload;
       state.isLoading = false;
     });
     builder.addCase(fetchLogin.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.error?.message);
+      const message = /(?<=<[p][r][e]>)([\s\S]*?)(?=<\/[p][r][e]>)/g;
+      state.error = action.error?.message?.match(message);
     });
 
     builder.addCase(fetchRegister.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchRegister.fulfilled, (state, action) => {
+      state.error = '';
       state.user = action.payload;
       state.isLoading = false;
     });
     builder.addCase(fetchRegister.rejected, (state, action) => {
+      const message = /(?<=<[p][r][e]>)([\s\S]*?)(?=<\/[p][r][e]>)/g;
+      state.error = action.error?.message?.match(message)
       state.isLoading = false;
-      console.log(action.error?.message);
     });
 
     builder.addCase(fetchLogout.pending, (state) => {

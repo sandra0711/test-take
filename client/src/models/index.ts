@@ -4,7 +4,7 @@ interface IUser {
 };
 
 export interface IContact {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   about: string;
@@ -20,6 +20,7 @@ export interface UserState {
   user: IUser;
   isAuth: boolean;
   isLoading: boolean;
+  error: any;
 };
 
 export interface ContactsState {
@@ -27,6 +28,6 @@ export interface ContactsState {
   isLoading: boolean;
 };
 
-export interface ChildProps {
+export interface ContactResponse {
   contact: IContact;
 }

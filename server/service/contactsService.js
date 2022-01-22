@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-const bcrypt = require('bcrypt');
 const MyError = require('../exceptions/api-error');
 const Contacts = require('../model/ContactsModel');
 
@@ -10,7 +9,7 @@ class ContactsService {
     if (candidate) {
       throw MyError.BadRequest('Контакт с таким email уже зарегистрирован');
     };
-    const contact = await User.create({
+    const contact = await Contacts.create({
       name,
       email,
       about,
@@ -21,20 +20,18 @@ class ContactsService {
     }
   };
 
-  async edit(email, password) {
-    const user = await User.findOne({ email });
-    if (!user) throw MyError.BadRequest('Пользователь с таким email не зарегистрирован');
-    const isPassword = await bcrypt.compare(password, user.password);
-    if (!isPassword) throw MyError.BadRequest('Неверный пароль');
-    const userId = user._id;
-    const tokens = tokenService.generateToken({ userId, email: user.email });
-    await tokenService.saveToken(userId, tokens.refreshToken);
-    return { ...tokens, user }
+  async edit(contactId, name, email, about) {
+    const contact = await Contacts.findById(contactId);
+    contact.name = name;
+    contact.email = email;
+    contact.about = about;
+    await contact.save();
+    return contact
   };
 
-  async remove(refreshToken) {
-    const token = await tokenService.removeToken(refreshToken);
-    return token;
+  async delete(contactId) {
+    const removeContact = await Contacts.deleteOne({ _id: contactId });
+    return removeContact;
   };
 
 };

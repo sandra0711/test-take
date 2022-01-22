@@ -4,7 +4,7 @@ const router = new Router();
 
 router.post('/add', contactsController.add);
 router.post('/edit', contactsController.edit);
-router.post('/remove', contactsController.remove);
+router.post('/delete', contactsController.delete);
 router.get('/allContacts', contactsController.getAllContacts);
 
 module.exports = router;

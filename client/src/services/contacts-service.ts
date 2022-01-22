@@ -1,17 +1,17 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-import { AuthResponse, IContact } from '../models';
+import { IContact, ContactResponse } from '../models';
 
-const add = ({ email, password }: any): Promise<AxiosResponse<AuthResponse>> => {
-  return $api.post<AuthResponse>('/user/register', { email, password })
+const add = ({ name, email, about }: any): Promise<AxiosResponse<ContactResponse>> => {
+  return $api.post<ContactResponse>('/contacts/add', { name, email, about })
 };
 
-const edit = async ({ email, password }: any): Promise<AxiosResponse<AuthResponse>> => {
-  return $api.post<AuthResponse>('/user/login', { email, password })
+const edit = async (contactId: string, name: string, email: string, about: string): Promise<AxiosResponse<ContactResponse>> => {
+  return $api.post<ContactResponse>('/contacts/edit', { contactId, name, email, about })
 };
 
-const remove = (): Promise<void> => {
-  return $api.post('/user/logout')
+const remove = (id: string): Promise<AxiosResponse<string>> => {
+  return $api.post<string>('/contacts/delete', { id })
 };
 
 const getAllContacts = (): Promise<AxiosResponse> => {

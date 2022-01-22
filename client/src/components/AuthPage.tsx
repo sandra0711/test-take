@@ -1,12 +1,13 @@
 import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { fetchRegister, fetchLogin } from '../store/slicers/userSlice';
 import { Button, TextField } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 const AuthPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const errorAuth = useAppSelector(state => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
   const handlerSignup = (email: string, password: string) => {
     dispatch(fetchRegister({ email, password }));
   };
@@ -15,7 +16,7 @@ const AuthPage: FC = () => {
   };
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div id="auth" style={{ marginTop: "20px" }}>
       <form autoComplete="off">
         <TextField
           type='email'
@@ -35,6 +36,7 @@ const AuthPage: FC = () => {
           <Button variant="contained" color="primary" style={{ marginLeft: "50px" }} onClick={() => handlerLogin(email, password)}>Войти</Button>
         </div>
       </form>
+      {errorAuth ? <small style={{ color: "red" }}>{errorAuth}</small> : null}
     </div>
   );
 }
