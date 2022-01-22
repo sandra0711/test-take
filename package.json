@@ -1,0 +1,27 @@
+{
+  "name": "test-take",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "14.x",
+    "npm": "8.x"
+  },
+  "scripts": {
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandra0711/test-take.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandra0711/test-take/issues"
+  },
+  "homepage": "https://github.com/sandra0711/test-take#readme",
+  "dependencies": {
+    "heroku": "^7.59.2",
+    "serve": "^13.0.2"
+  }
+}
