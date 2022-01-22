@@ -10,10 +10,10 @@
   "proxy": "http://localhost:5000",
   "scripts": {
     "heroku-postbuild": "npm run build",
-    "start:client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start:client": "client/react-scripts start",
+    "build": "client/react-scripts build",
+    "test": "client/react-scripts test",
+    "eject": "client/react-scripts eject",
     "start:server": "nodemon server/index"
   },
   "repository": {
