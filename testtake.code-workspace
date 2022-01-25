@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\Готовые модули для приложений\\authjwtreact2"
+		},
+		{
+			"path": "..\\Готовые модули для приложений\\authjwtreact"
+		},
+		{
+			"path": "..\\Готовые модули для приложений\\authreactaxiosmobx"
+		},
+		{
+			"path": "..\\educational-platform"
+		}
+	],
+	"settings": {}
+}

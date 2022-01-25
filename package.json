@@ -10,8 +10,7 @@
   "proxy": "http://localhost:5000",
   "scripts": {
     "heroku-postbuild": "npm run build",
-    "start:client": "react-scripts start",
-    "start:server": "nodemon server/index"
+    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\" "
   },
   "repository": {
     "type": "git",
@@ -26,5 +25,8 @@
   "dependencies": {
     "heroku": "^7.59.2",
     "serve": "^13.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }
