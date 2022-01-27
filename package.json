@@ -27,6 +27,7 @@
     "serve": "^13.0.2"
   },
   "devDependencies": {
+    "@types/validator": "^13.7.1",
     "concurrently": "^7.0.0"
   }
 }
