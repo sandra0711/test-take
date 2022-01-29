@@ -55,6 +55,7 @@ export const fetchLogout = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   'user/checkAuth',
   async () => {
+    console.log('gggggggggg');
     try {
       const response = await axios.get<AuthResponse>(`${API_URL}/user/refresh`, { withCredentials: true });
       localStorage.setItem('token', response.data.accessToken);
@@ -119,6 +120,7 @@ const userSlice = createSlice({
 
     builder.addCase(checkAuth.pending, (state) => {
       state.isLoading = true;
+      console.log('jjjjjjjjjj');
     });
     builder.addCase(checkAuth.fulfilled, (state, action) => {
       state.isLoading = false;

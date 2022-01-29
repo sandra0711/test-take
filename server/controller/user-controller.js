@@ -14,6 +14,7 @@ class UserController {
   };
 
   async login(req, res, next) {
+    console.log('вхожу');
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
@@ -25,6 +26,7 @@ class UserController {
   };
 
   async logout(req, res, next) {
+    console.log('выхожу');
     try {
       const { refreshToken } = req.cookies;
       const token = await userService.logout(refreshToken);

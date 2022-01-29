@@ -4,7 +4,6 @@ import Contacts from './components/Contacts';
 import { checkAuth, fetchLogout } from './store/slicers/userSlice';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import Header from './components/Header';
-import { Button } from '@material-ui/core';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -12,11 +11,12 @@ const App: FC = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(checkAuth);
+      dispatch(checkAuth());
     };
   }, [dispatch]);
 
   if (!userState.isAuth) {
+    console.log(userState.isAuth);
     return (
       <>
         <Header title="Cтраница авторизации" />
@@ -26,11 +26,12 @@ const App: FC = () => {
       </>
     );
   } else {
+    console.log(userState.isAuth);
     return (
       <>
         <Header title="Страница контактов" />
         <Contacts />
-        <Button style={{ margin: "20px" }} variant="contained" color="primary" onClick={() => dispatch(fetchLogout())}>Выйти</Button>
+        <button className="btn blue" onClick={() => dispatch(fetchLogout())}>Выйти</button>
       </>
     );
   };

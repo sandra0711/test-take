@@ -1,18 +1,16 @@
 import { FC } from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
 
 interface TitleProps {
   title: string; // try not to use any.  
 };
 const Header: FC<TitleProps> = ({ title }) => {
+  console.log(title);
   return (
-    <AppBar position="static" component="div">
-      <Toolbar>
-        <Typography variant="h6" component="span">
-          Тестовое задание. {title}
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <nav>
+      <div className="nav-wrapper blue">
+        <a href="#" className="brand-logo center"> Тестовое задание. {title}</a>
+      </div>
+    </nav>
   );
 }
 

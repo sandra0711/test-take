@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { IContact } from '../models';
-import { Grid, Card, CardContent, Typography, CardActions, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,27 +33,30 @@ const ContactItem: FC<ContactProps> = ({ contact }) => {
   };
 
   return (
-    <Grid item xs={4} md={2} style={{ marginTop: "10px" }}>
-      <Card style={{ marginRight: "20px", height: "100%" }}>
-        <CardContent>
-        <Typography variant="h5" component="h2">
-          {contact.name}
-        </Typography>
-          <Typography variant="body2">
-          {contact.email}
-        </Typography>
-          <Typography variant="body1">
-          {contact.about}
-        </Typography>
-      </CardContent>
-      <CardActions>
-          <IconButton aria-label="delete" onClick={() => dispatch(fetchDelete(contact._id))}>
-          <DeleteIcon />
-        </IconButton>
-          <IconButton aria-label="edit" onClick={handleClickOpen}>
-          <EditIcon />
-        </IconButton>
+    <div className="col s6 m4">
+      <div className="card blue-grey darken-1">
+        <div className="card-content white-text">
+          <h5>
+            {contact.name}
+          </h5>
+          <p>
+            {contact.email}
+          </p>
+          <p>
+            {contact.about}
+          </p>
+        </div>
+        <div className="card-action">
 
+          {/* так вставляем иконки */}
+          {/* <i class="material-icons prefix">mode_edit</i> */}
+
+          <IconButton aria-label="delete" onClick={() => dispatch(fetchDelete(contact._id))}>
+            <DeleteIcon />
+          </IconButton>
+          <IconButton aria-label="edit" onClick={handleClickOpen}>
+            <EditIcon />
+          </IconButton>
           <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Изменение контакта</DialogTitle>
             <DialogContent>
@@ -62,13 +65,13 @@ const ContactItem: FC<ContactProps> = ({ contact }) => {
               <TextField value={about} onChange={(e) => setAbout(e.target.value)} style={{ marginTop: "10px" }} label="about" fullWidth></TextField>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleEdit(contact._id)} color="primary">Сохранить изменения</Button>
-              <Button onClick={handleClose} color="primary">Выйти без сохранения</Button>
+              <button className="btn" onClick={() => handleEdit(contact._id)} color="blue">Сохранить изменения</button>
+              <button className="btn" onClick={handleClose} color="blue">Выйти без сохранения</button>
             </DialogActions>
           </Dialog>
-      </CardActions>
-    </Card>
-    </Grid >
+        </div>
+      </div>
+    </div>
   );
 }
 

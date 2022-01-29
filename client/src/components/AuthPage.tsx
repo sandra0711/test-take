@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import validator from 'validator'
 import { fetchRegister, fetchLogin } from '../store/slicers/userSlice';
-import { Button, TextField } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 const AuthPage: FC = () => {
@@ -48,26 +47,38 @@ const AuthPage: FC = () => {
   };
 
   return (
-    <div id="auth" style={{ marginTop: "20px" }}>
-      <form autoComplete="off">
+    <div className="row">
+      <form className="col s12">
+        <div className="row">
         {emailError ? <><small style={{ color: "red" }}>{emailError}</small><br /></> : null}
         {passwordError ? <><small style={{ color: "red" }}>{passwordError}</small><br /></> : null}
-        <TextField
-          type='email'
-          value={email}
-          variant="outlined"
-          onChange={e => validateEmail(e)}
-          placeholder='email' />
-        <TextField
-          style={{ marginLeft: "20px" }}
-          type='password'
-          value={password}
-          variant="outlined"
-          onChange={e => validatePassword(e)}
-          placeholder='password' />
-        <div style={{ marginTop: "20px" }}>
-          <Button disabled={!(isValidateEmail && isValidatePassword)} variant="contained" color="primary" onClick={() => handlerSignup(email, password)}>Зарегистрироваться</Button>
-          <Button disabled={!(isValidateEmail && isValidatePassword)} variant="contained" color="primary" style={{ marginLeft: "50px" }} onClick={() => handlerLogin(email, password)}>Войти</Button>
+          <div className="input-field col s4 offset-s2">
+            <input
+              type='email'
+              value={email}
+              onChange={e => validateEmail(e)}
+              id='email'
+              className="validate"
+            />
+            <label htmlFor="email">email</label>
+          </div>
+          <div className="input-field col s4">
+            <input
+              type='password'
+              value={password}
+              onChange={e => validatePassword(e)}
+              id='password'
+            />
+            <label htmlFor="password">password</label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s2 offset-s4">
+            <button className="btn blue" disabled={!(isValidateEmail && isValidatePassword)} onClick={() => handlerSignup(email, password)}>Зарегистрироваться</button>
+          </div>
+          <div className="col s2">
+            <button className="btn blue" disabled={!(isValidateEmail && isValidatePassword)} onClick={() => handlerLogin(email, password)}>Войти</button>
+          </div>
         </div>
       </form>
       {errorAuth ? <small style={{ color: "red" }}>{errorAuth}</small> : null}

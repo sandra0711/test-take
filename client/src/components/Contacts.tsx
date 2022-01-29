@@ -1,6 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, Container, DialogActions, DialogContent, DialogTitle, TextField, Grid } from '@material-ui/core';
-import { Dialog } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchAdd, fetchGetAllContacts } from '../store/slicers/contactsSlice';
 import ContactItem from './ContactItem';
@@ -36,14 +34,14 @@ const Contacts: FC = () => {
   }, [dispatch]);
 
   return (
-    <Grid container spacing={3}>
+    <div className='row'>
       {contacts && contacts.map(contact => {
         return (
           <ContactItem contact={contact} key={Math.random()} />
         )
       })}
-      <Button onClick={handleClickOpen}>Добавить контакт</Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <button className="btn blue" onClick={handleClickOpen}>Добавить контакт</button>
+      {/* <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Новый контакт</DialogTitle>
         <DialogContent>
           <TextField value={name} onChange={(e) => setName(e.target.value)} style={{ marginRight: "20px" }} autoFocus label="name"></TextField>
@@ -54,8 +52,8 @@ const Contacts: FC = () => {
           <Button onClick={() => handleAdd(name, email, about)} color="primary">Сохранить</Button>
           <Button onClick={handleClose} color="primary">Выйти без сохранения</Button>
         </DialogActions>
-      </Dialog>
-    </Grid >
+      </Dialog> */}
+    </div >
   );
 }
 
