@@ -7,7 +7,7 @@ const register = ({ email, password }: any): Promise<AxiosResponse<AuthResponse>
 };
 
 const login = async ({ email, password }: any): Promise<AxiosResponse<AuthResponse>> => {
-  return $api.post<AuthResponse>('/user/login', { email, password })
+  return $api.post<AuthResponse>('/user/login', { email, password });
 };
 
 const logout = (): Promise<void> => {

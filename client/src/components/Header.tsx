@@ -4,11 +4,10 @@ interface TitleProps {
   title: string; // try not to use any.  
 };
 const Header: FC<TitleProps> = ({ title }) => {
-  console.log(title);
   return (
     <nav>
       <div className="nav-wrapper blue">
-        <a href="#" className="brand-logo center"> Тестовое задание. {title}</a>
+        <h4 className='center'> Тестовое задание. {title}</h4>
       </div>
     </nav>
   );

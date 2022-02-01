@@ -21,7 +21,7 @@ export const fetchRegister = createAsyncThunk(
     try {
       const response = await register({ email, password });
       localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
+      return response.data.userDto;
     } catch (e: any) {
       throw new Error(e.response.data);
     }
@@ -33,7 +33,7 @@ export const fetchLogin = createAsyncThunk(
     try {
       const response = await login({ email, password });
       localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
+      return response.data.userDto;
     } catch (e: any) {
       throw new Error(e.response.data);
     }
@@ -55,11 +55,13 @@ export const fetchLogout = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   'user/checkAuth',
   async () => {
-    console.log('gggggggggg');
+    console.log('zzzzzzz');
+
     try {
       const response = await axios.get<AuthResponse>(`${API_URL}/user/refresh`, { withCredentials: true });
       localStorage.setItem('token', response.data.accessToken);
-      return response.data.user;
+
+      return response.data.userDto;
     } catch (e: any) {
       throw new Error('Пользователь не авторизован');
     }
@@ -86,6 +88,8 @@ const userSlice = createSlice({
       state.isLoading = false;
       const message = /(?<=<[p][r][e]>)([\s\S]*?)(?=<\/[p][r][e]>)/g;
       state.error = action.error?.message?.match(message);
+      console.log(state.error);
+
     });
 
     builder.addCase(fetchRegister.pending, (state) => {
@@ -120,7 +124,6 @@ const userSlice = createSlice({
 
     builder.addCase(checkAuth.pending, (state) => {
       state.isLoading = true;
-      console.log('jjjjjjjjjj');
     });
     builder.addCase(checkAuth.fulfilled, (state, action) => {
       state.isLoading = false;

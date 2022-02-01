@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import AuthPage from './components/AuthPage';
 import Contacts from './components/Contacts';
 import { checkAuth, fetchLogout } from './store/slicers/userSlice';
@@ -7,7 +7,9 @@ import Header from './components/Header';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
-  const userState = useAppSelector(state => state.user);
+  const userStore = useAppSelector(state => state.user);
+  console.log('это стейт из эпп', userStore);
+
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -15,26 +17,27 @@ const App: FC = () => {
     };
   }, [dispatch]);
 
-  if (!userState.isAuth) {
-    console.log(userState.isAuth);
-    return (
-      <>
-        <Header title="Cтраница авторизации" />
+  if (!userStore.isAuth) return (
+    <>
+      < Header title="Cтраница авторизации" />
+      <h5>kkk{userStore.isAuth}</h5>
         <div>
           <AuthPage />
         </div>
       </>
-    );
-  } else {
-    console.log(userState.isAuth);
-    return (
+  );
+
+  return (
       <>
         <Header title="Страница контактов" />
+      <div>
         <Contacts />
+      </div>
+      <div>
         <button className="btn blue" onClick={() => dispatch(fetchLogout())}>Выйти</button>
+      </div>
       </>
-    );
-  };
+  )
 };
 
 export default App;

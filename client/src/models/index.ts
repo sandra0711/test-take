@@ -13,7 +13,7 @@ export interface IContact {
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
-  user: IUser
+  userDto: IUser
 };
 
 export interface UserState {

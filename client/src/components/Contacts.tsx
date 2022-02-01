@@ -5,7 +5,11 @@ import ContactItem from './ContactItem';
 
 const Contacts: FC = () => {
   const dispatch = useAppDispatch();
-  const { contacts } = useAppSelector(state => state.contacts);
+  const stateRoot = useAppSelector(state => state);
+  const contacts = stateRoot.contacts.contacts;
+  const stateUser = stateRoot.user;
+  console.log('state', stateUser);
+
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

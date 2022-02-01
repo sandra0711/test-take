@@ -6,7 +6,6 @@ import App from './App';
 import { store } from './store';
 
 ReactDOM.render(
-
     <BrowserRouter>
       <Provider store={store}>
         <App />

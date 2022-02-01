@@ -5,7 +5,9 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 const AuthPage: FC = () => {
   const dispatch = useAppDispatch();
-  const errorAuth = useAppSelector(state => state.user.error);
+  const userStore = useAppSelector(state => state.user);
+  console.log('из ауспэйдж строка 9', userStore);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -50,8 +52,13 @@ const AuthPage: FC = () => {
     <div className="row">
       <form className="col s12">
         <div className="row">
-        {emailError ? <><small style={{ color: "red" }}>{emailError}</small><br /></> : null}
-        {passwordError ? <><small style={{ color: "red" }}>{passwordError}</small><br /></> : null}
+          <div className='container center'>
+            {emailError ? <><small style={{ color: "red" }}>{emailError}</small><br /></> : null}
+            {passwordError ? <><small style={{ color: "red" }}>{passwordError}</small><br /></> : null}
+          </div>
+          <div className='container center'>
+            {userStore.error ? <small style={{ color: "red" }}>{userStore.error}</small> : null}
+          </div>
           <div className="input-field col s4 offset-s2">
             <input
               type='email'
@@ -81,7 +88,6 @@ const AuthPage: FC = () => {
           </div>
         </div>
       </form>
-      {errorAuth ? <small style={{ color: "red" }}>{errorAuth}</small> : null}
     </div>
   );
 }
