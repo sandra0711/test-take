@@ -9,12 +9,11 @@ class UserController {
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 24 * 60 * 60 * 10000, httpOnly: true });
       return res.json(userData);
     } catch (e) {
-      next(e.message);
+      next(e);
     }
   };
 
   async login(req, res, next) {
-    console.log('вхожу');
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
@@ -26,7 +25,6 @@ class UserController {
   };
 
   async logout(req, res, next) {
-    console.log('выхожу');
     try {
       const { refreshToken } = req.cookies;
       const token = await userService.logout(refreshToken);

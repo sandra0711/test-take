@@ -1,13 +1,12 @@
 require('dotenv').config();
 
-const MyError = require('../exceptions/api-error');
 const Contacts = require('../model/ContactsModel');
 
 class ContactsService {
   async add(name, email, about) {
     const candidate = await Contacts.findOne({ email });
     if (candidate) {
-      throw MyError.BadRequest('Контакт с таким email уже зарегистрирован');
+      throw new Error('Контакт с таким email уже зарегистрирован');
     };
     const contact = await Contacts.create({
       name,

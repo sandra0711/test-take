@@ -3,13 +3,12 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const User = require('../model/UserModel');
 const tokenService = require('./tokenService');
-const MyError = require('../exceptions/api-error');
 
 class UserService {
   async registration(email, password) {
     const candidate = await User.findOne({ email });
     if (candidate) {
-      throw MyError.BadRequest('Пользователь с таким email уже зарегистрирован');
+      throw new Error('Пользователь с таким email уже зарегистрирован');
     };
     const hashPassword = await bcrypt.hash(password, 7);
     const user = await User.create({
@@ -25,19 +24,24 @@ class UserService {
 
     return {
       ...tokens,
-      user,
+      userDto,
     }
   };
 
   async login(email, password) {
     const user = await User.findOne({ email });
-    if (!user) throw MyError.BadRequest('Пользователь с таким email не зарегистрирован');
+    if (!user) throw new Error('Пользователь с таким email не зарегистрирован');
     const isPassword = await bcrypt.compare(password, user.password);
-    if (!isPassword) throw MyError.BadRequest('Неверный пароль');
+    if (!isPassword) throw new Error('Неверный пароль');
     const userId = user._id;
     const tokens = tokenService.generateToken({ userId, email: user.email });
     await tokenService.saveToken(userId, tokens.refreshToken);
-    return { ...tokens, user }
+    const userDto = {
+      userId: user._id,
+      userEmail: user.email,
+    };
+    console.log(userDto);
+    return { ...tokens, userDto }
   };
 
   async logout(refreshToken) {
@@ -47,12 +51,12 @@ class UserService {
 
   async refresh(refreshToken) {
     if (!refreshToken) {
-      throw MyError.UnauthorizedError();
+      throw new Error('Пользователь не авторизован');
     };
     const userData = await tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDb) {
-      throw MyError.UnauthorizedError();
+      throw new Error('Пользователь не авторизован');
     };
     const user = await User.findById(userData.userId);
     const userDto = {
